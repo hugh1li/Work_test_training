@@ -1,0 +1,8 @@
+functions: 
+transform_LGR_raw_data.r: new New Mexico copy
+transform_raw_wind.r: Frostburg copy
+
+Code:
+import_airmar.r
+import_lgr.r
+Both files are using my New Mexico codes
