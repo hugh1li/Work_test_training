@@ -5,5 +5,5 @@ source('code/functions/transform_LGR_raw_data.R')
 LGR <- cleanLGRdata(x = 'data/22082019-131702.dat')
 summary(LGR)
 
-# write.csv(LGR, "data/LGR_refined.csv")
+write.csv(LGR, "temp/LGR_refined.csv")
 
