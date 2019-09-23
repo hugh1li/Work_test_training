@@ -1,29 +1,30 @@
 # pressue unit bar = 10^5 pascal
 # output of the fcn is using UTC datetime (standard recording)
 
-# WIMDA no indicator of GPS wrong
-# GPRMC has the data quality indicator
+# WIMDA: weather composite
+# GPRMC: GPS composite; has the Airmar data quality indicator
 
-# how to extract wind
+# code example: how to extract wind
 # wind1 <- read_lines(file = 'YN-data/airmar_data/Sep_28_2018_3201664_0183.LOG')
 # Airmar_1 <- transform_wind(wind1) 
 
-transform_wind <- function(wind){
+transform_raw_wind <- function(wind){
   
   library(stringr)
   wind_1 <- wind %>% as.data.frame(stringsAsFactors=FALSE) 
-  colnames(wind_1) <- c('X')
+  colnames(wind_1) <- c('X') # give the column name: X
   
-  #First check what NMEA strings we get
+  # first check what NMEA strings we get
   # str_locate(wind_1[202, ], '\\$')
   NMEA_type <- wind_1 %>% filter(X!="")
   NMEA_summary <- lapply(NMEA_type, str_sub, 19, 23) %>% table()
   print(NMEA_summary)
   
+  # find rows with GPRMC and WIMDA
   wind_GPRMC <- wind_1 %>% filter(str_detect(X, 'GPRMC')) 
   wind_WIMDA <- wind_1 %>% filter(str_detect(X, 'WIMDA')) 
   
-  # separate rows based on comma, then join them based on the timestamp in first few letters. Join the final one with LGR based on UTC.
+  # separate the row based on the delimiter comma, then join them based on the Computer_DateTime(number in the beginning).
   
   wind_GPRMC_1 <- do.call('rbind', strsplit(wind_GPRMC$X, ',')) %>% as.data.frame(stringsAsFactors=FALSE) %>% as.tibble()
   wind_WIMDA_1 <- do.call('rbind', strsplit(wind_WIMDA$X, ',')) %>% as.data.frame(stringsAsFactors=FALSE) %>% as.tibble()
