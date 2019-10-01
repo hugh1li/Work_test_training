@@ -8,6 +8,13 @@
 # wind1 <- read_lines(file = 'YN-data/airmar_data/Sep_28_2018_3201664_0183.LOG')
 # Airmar_1 <- transform_wind(wind1) 
 
+# When you have these warning messages, it could be that airmar loses satellite signal, and splits empty strings.
+# Warning messages:
+#   1: In .parse_hms(..., order = "HMS", quiet = quiet) :
+#   Some strings failed to parse, or all strings are NAs
+# 2:  147 failed to parse. 
+# 3:  147 failed to parse. 
+
 transform_raw_wind <- function(wind){
   
   library(stringr)
