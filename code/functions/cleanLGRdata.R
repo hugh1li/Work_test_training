@@ -1,7 +1,7 @@
 # 09/16 change lag time to be 50 instead of 2 minutes coz we have the external pump.
-# note the final DateTime is in easter time.
+# note the final DateTime is in UTC-4, 4 hrs behind the UTC. Matt did the setting in Hemisphere.
 
-cleanLGRdata <- function(x, tz_default = 'America/New_York') {
+cleanLGRdata <- function(x, tz_default = 'Etc/GMT+4') {
   data <- read_tsv(file = x, col_names = FALSE, skip = 2, col_types = cols_only(X1 = col_character(), X2 = col_character(), X3 = col_character(), X4 = col_double(), X5 = col_double(), X7 = col_double(), X13 = col_double(), X17 = col_double()))
   if(ncol(data) == 5)
     stop("Error: Your dataframe is too short and do not have good rows inside. Drop the dat in excel and have a look.")
